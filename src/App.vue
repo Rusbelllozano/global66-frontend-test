@@ -1,30 +1,39 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div class="wrapper__principal">
+    <router-view />
   </div>
-  <router-view />
+  <ModalPokemon  v-if="$store.state.show_modal"/>
 </template>
-
+<script>
+import ModalPokemon from "@/components/ModalPokemon.vue";
+export default {
+  components: {
+    ModalPokemon,
+  },
+  mounted() {
+    if (!this.$store.state.list_pokemons.length) {
+      this.$store.dispatch("GET_ALL_POKEMONS");
+    }
+  },
+};
+</script>
 <style lang="scss">
+* {
+  margin: 0;
+  padding: 0;
+}
+.wrapper__principal {
+  display: grid;
+  margin: 0 auto;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+  color: #353535;
+  padding: 0;
+  background-color: #E5E5E5;
+  min-height: 100vh;
 }
 </style>
